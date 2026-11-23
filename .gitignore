@@ -1,0 +1,6 @@
+bin/
+obj/
+publish/
+save.json
+.loot_write_probe
+*.user

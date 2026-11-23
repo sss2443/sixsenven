@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>LootSearch</RootNamespace>
+    <AssemblyName>LootSearch</AssemblyName>
+    <Version>1.0.0</Version>
+    <Product>摸物品 · 开箱寻宝</Product>
+    <AssemblyTitle>摸物品 · 开箱寻宝</AssemblyTitle>
+    <!-- 允许在非 Windows 机器上编译 Windows 目标 -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationIcon Condition="Exists('app.ico')">app.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+</Project>
