@@ -20,7 +20,10 @@ namespace LootSearch
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var hall = new HallForm();
+            AppHost.HallForm = hall;
+            Application.Run(hall);
         }
     }
 }
