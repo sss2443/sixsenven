@@ -68,7 +68,8 @@ namespace LootSearch.UI
                     if (cell.Item != null && !cell.Revealed)
                     {
                         var tier = BoxTierDefinition.ById(board.TierId);
-                        progress += dt / Math.Max(0.25, tier.SearchSeconds);
+                        double speedFactor = 1.0 + engine.PetSpeedPercent / 100.0;
+                        progress += dt / Math.Max(0.15, tier.SearchSeconds / speedFactor);
                         if (progress >= 1.0)
                         {
                             progress = 0;
@@ -348,7 +349,8 @@ namespace LootSearch.UI
         private void DrawClearedBanner(Graphics g, BoardState board)
         {
             var tier = BoxTierDefinition.ById(board.TierId);
-            string text = $"「{tier.Name}」已搜完 · 共 {board.ItemTotalCount} 件 · 总价值 ¥{board.RevealedValue:N0}";
+            var map = MapDefinition.ById(board.MapId);
+            string text = $"「{map.Name} · {tier.Name}」已搜完 · 共 {board.ItemTotalCount} 件 · 总价值 ¥{board.RevealedValue:N0}";
             var size = g.MeasureString(text, Theme.FontButton);
             var rect = new RectangleF(Width / 2f - size.Width / 2f - 22, 14, size.Width + 44, size.Height + 20);
 
@@ -400,6 +402,20 @@ namespace LootSearch.UI
             if (index < 0) return;
             var cell = board.Cells[index];
             if (cell.Item == null || cell.Revealed) return;
+
+            if (engine.Player.AutoSearch)
+            {
+                var item = engine.RevealCell(index);
+                if (item != null)
+                {
+                    flashUntil[index] = DateTime.Now.AddMilliseconds(700);
+                    ItemFound?.Invoke(item);
+                    if (board.IsCleared) BoardCleared?.Invoke();
+                    Invalidate();
+                }
+                return;
+            }
+
             hoverIndex = index;
             searchIndex = index;
             progress = 0;
